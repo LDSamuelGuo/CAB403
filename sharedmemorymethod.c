@@ -14,7 +14,7 @@
 
 #include "sharedmemory.c"
 /*****************Method******************************/
-bool get_shared_object_T(share_memory_t* shm, const char* share_name )
+bool get_shared_object_T(shared_memory_t* shm, const char* share_name )
 {     
 
      //remove memory
@@ -22,7 +22,7 @@ bool get_shared_object_T(share_memory_t* shm, const char* share_name )
 
     // Assign share name to shm->name.
     shm->name = share_name;
-    (shm->fd = shm_open(share_name, O_CREAT | O_RDWR, 0666);
+    (shm->fd = shm_open(share_name, O_CREAT | O_RDWR, 0666));
     //check if shm_open worked
     if (shm->fd == -1){
         shm->data = NULL;
@@ -55,12 +55,12 @@ void destroy_shared_object( shared_memory_t* shm ) {
 }
 
 
-bool get_shared_object_TW(share_memory_t* shm, const char* share_name )
+bool get_shared_object_TW(shared_memory_t* shm, const char* share_name )
 {         
 
     // Assign share name to shm->name.
     shm->name = share_name;
-    shm->fd = shm_open(share_name, O_RDWR, 0)
+    shm->fd = shm_open(share_name, O_RDWR, 0);
    if (shm->fd  < 0)
    {
         shm->data = NULL;
@@ -91,7 +91,8 @@ void setDefaultValues(shared_memory_t shm){
     pthread_condattr_setpshared(&attr_c, PTHREAD_PROCESS_SHARED);
 
 //Exits
-    for (int i = 0;i < EXITS;i++){
+int i = 0;
+    while(i < EXITS){
         
         // Boom Gates
         pthread_mutex_init(&shm.data->exit[i].gate.gatemutex, &attr_m);
@@ -101,11 +102,11 @@ void setDefaultValues(shared_memory_t shm){
          //  LPR sensors
         pthread_mutex_init(&shm.data->exit[i].LPRSensor.LPRmutex, &attr_m);
         pthread_cond_init(&shm.data->exit[i].LPRSensor.LPRcond, &attr_c);
-
+         i++;
         
     }
 //Levels
-    for (int i = 0;i < LEVELS;i++){
+    while (i < LEVELS){
         //  LPR sensors
         pthread_mutex_init(&shm.data->level[i].LPRSensor.LPRmutex, &attr_m);
         pthread_cond_init(&shm.data->level[i].LPRSensor.LPRcond, &attr_c);
@@ -114,10 +115,11 @@ void setDefaultValues(shared_memory_t shm){
 
         // Initiliase number plate to be xxxxxx
         strcpy(shm.data->level[i].LPRSensor.plate, "xxxxxx");
+        i++;
     }
    
   //Entries
-    for (int i = 0;i < ENTRANCES;i++){
+    while (i < ENTRANCES){
          //  Information signs
         pthread_mutex_init(&shm.data->entrance[i].informationSign.ISmutex, &attr_m);
         pthread_cond_init(&shm.data->entrance[i].informationSign.IScond, &attr_c);
@@ -130,9 +132,9 @@ void setDefaultValues(shared_memory_t shm){
           //  LPR sensors
         pthread_mutex_init(&shm.data->entrance[i].LPRSensor.LPRmutex, &attr_m);
         pthread_cond_init(&shm.data->entrance[i].LPRSensor.LPRcond, &attr_c);
-       
+       i++;
 
         
     }
-printf("All mutexes created.\n")
+printf("All mutexes created.\n");
 }
