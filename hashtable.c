@@ -56,7 +56,7 @@ int findIndex(htable_t* htable, char *plate){
 void printVehicleList(htable_t* htable){
     printf("NUMBER OF PLATES ARE: %d\n", htable->size); 
     int i = 0;
-    for (i < htable->size){
+   while (i < htable->size){
         printf("Plate number %d is: %s\n", i, htable->vehicle[i].plate);
         printf("Entrance time of vehicle %d is: %ld\n", i, htable->vehicle[i].entranceTime);
         printf("Park time of vehicle %d is: %ld\n", i, htable->vehicle[i].parkTime);
@@ -84,31 +84,34 @@ bool htable_add(htable_t *htable, char *plate, clock_t entranceTime, clock_t par
 void htable_delete(htable_t* htable, char *plate){
     int old_size = htable->size;
     vehicle_t old_vehicle[MAX_CARPARK];
-    int base;
+    int base, i = 0 ;
 
-    for (int i = 0; i < old_size; i++){
+    while (i < old_size){
         memcpy(old_vehicle[i].plate, htable->vehicle[i].plate, 7);
         old_vehicle[i].entranceTime = htable->vehicle[i].entranceTime;
         old_vehicle[i].parkTime = htable->vehicle[i].parkTime;
         old_vehicle[i].level = htable->vehicle[i].level;
         old_vehicle[i].exitStatus = htable->vehicle[i].exitStatus;
         old_vehicle[i].LPRcount = htable->vehicle[i].LPRcount;
+	i++;
     }
 
-    for (int i = 0; i < old_size; i++){
+    while (i < old_size){
         if (memcmp(htable->vehicle[i].plate, plate, 7) == 0){
             loc = i;
             break;
         }
+	    i++;
     }
 
-    for (int i = 0; i < loc; i++){
+    while ( i < base){
         memcpy(htable->vehicle[i].plate, old_vehicle[i].plate,7);
         htable->vehicle[i].entranceTime = old_vehicle[i].entranceTime;
         htable->vehicle[i].parkTime = old_vehicle[i].parkTime;
         htable->vehicle[i].level = old_vehicle[i].level;
         htable->vehicle[i].exitStatus = old_vehicle[i].exitStatus;
         htable->vehicle[i].LPRcount = old_vehicle[i].LPRcount;
+	    i++;
     }
 
     for (int i = base; i < old_size - 1; i++){
