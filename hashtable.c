@@ -24,7 +24,7 @@ typedef struct htable {
 
 
 // Initialise the storage
-bool htable_init(htable_t *htable){
+void htable_init(htable_t *htable){
     htable->size = 0;
     int i = 0;
     while (i < MAX_CARPARK)
@@ -52,24 +52,11 @@ int findIndex(htable_t* htable, char *plate){
     return 1;
 }
 
-// Print vehicles 
-void printVehicleList(htable_t* htable){
-    printf("NUMBER OF PLATES ARE: %d\n", htable->size); 
-    int i = 0;
-   while (i < htable->size){
-        printf("Plate number %d is: %s\n", i, htable->vehicle[i].plate);
-        printf("Entrance time of vehicle %d is: %ld\n", i, htable->vehicle[i].entranceTime);
-        printf("Park time of vehicle %d is: %ld\n", i, htable->vehicle[i].parkTime);
-        printf("Level of vehicle %d is: %d\n", i, htable->vehicle[i].level);
-        printf("Number of LRP count %d is: %d\n", i, htable->vehicle[i].LPRcount);
-        i++;
-    }
-}
 
 
 
 // Add a vehicle to the storage
-bool htable_add(htable_t *htable, char *plate, clock_t entranceTime, clock_t parkTime, int level){
+void htable_add(htable_t *htable, char *plate, clock_t entranceTime, clock_t parkTime, int level){
     int old_size = htable->size;
     memcpy(htable->vehicle[old_size].plate, plate, 7);
     htable->vehicle[old_size].entranceTime = entranceTime;
@@ -80,7 +67,23 @@ bool htable_add(htable_t *htable, char *plate, clock_t entranceTime, clock_t par
     htable->size = old_size + 1;
 }
 
-// Remove a vehicle based on its plate
+
+// Print vehicles 
+void printVehicleList(htable_t* htable){
+    printf("NUMBER OF PLATES ARE: %d\n", htable->size); 
+    int i = 0;
+    while (i < htable->size)
+    {
+        printf("Plate number %d is: %s\n", i, htable->vehicle[i].plate);
+        printf("Entrance time of vehicle %d is: %ld\n", i, htable->vehicle[i].entranceTime);
+        printf("Park time of vehicle %d is: %ld\n", i, htable->vehicle[i].parkTime);
+        printf("Level of vehicle %d is: %d\n", i, htable->vehicle[i].level);
+        printf("Number of LRP count %d is: %d\n", i, htable->vehicle[i].LPRcount);
+        i++;
+    }
+}
+
+// Remove a vehicle based on its platedelete
 void htable_delete(htable_t* htable, char *plate){
     int old_size = htable->size;
     vehicle_t old_vehicle[MAX_CARPARK];
@@ -98,7 +101,7 @@ void htable_delete(htable_t* htable, char *plate){
 
     while (i < old_size){
         if (memcmp(htable->vehicle[i].plate, plate, 7) == 0){
-            loc = i;
+            base = i;
             break;
         }
 	    i++;
@@ -125,3 +128,5 @@ void htable_delete(htable_t* htable, char *plate){
 
     htable->size = old_size - 1;
 }
+
+
