@@ -31,7 +31,7 @@ int main()
     create_shared_object_R(&shm, SHARE_NAME);
     // Declare local variables
     int j = 0, levelOfFire = 0, lim;
-    for(lim=0; lim < LOOPBOUNDARIE; ++j ) {
+    for(lim=0; lim < LOOPBOUNDARIE; j++ ) {
         // Loop through levels checking temperatures
         int i=0;
         while (i < LEVELS)
@@ -57,7 +57,7 @@ int main()
                 }
             }
             usleep(2000); 
-            ++i;   
+            i++;   
         }
         loopBoundary(lim);
 
@@ -134,9 +134,9 @@ void Fixedarray(int16_t array[TEMPCHANGE_WINDOW] , int n)
                 array[j]    = array[j+1];
                 array[j+1]  = temp;
             }
-            ++j;
+            j++;
         }
-        ++i;
+        i++;
     }
 }
 
