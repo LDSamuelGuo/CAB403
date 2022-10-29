@@ -91,26 +91,33 @@ void setDefaultValues(shared_memory_t shm){
     pthread_condattr_setpshared(&attr_c, PTHREAD_PROCESS_SHARED);
 //Entries
     for (int i = 0;i < ENTRANCES;i++){
-        //  LPR sensors
-        pthread_mutex_init(&shm.data->entrance[i].LPRSensor.LPRmutex, &attr_m);
-        pthread_cond_init(&shm.data->entrance[i].LPRSensor.LPRcond, &attr_c);
-        //  Boom Gates
-        pthread_mutex_init(&shm.data->entrance[i].gate.gatemutex, &attr_m);
-        pthread_cond_init(&shm.data->entrance[i].gate.gatecond, &attr_c);
-        //  Information signs
+         //  Information signs
         pthread_mutex_init(&shm.data->entrance[i].informationSign.ISmutex, &attr_m);
         pthread_cond_init(&shm.data->entrance[i].informationSign.IScond, &attr_c);
+        
+       //  Boom Gates
+        pthread_mutex_init(&shm.data->entrance[i].gate.gatemutex, &attr_m);
+        pthread_cond_init(&shm.data->entrance[i].gate.gatecond, &attr_c);
+          shm.data->entrance[i].gate.status = 'C';
+        strcpy(shm.data->entrance[i].LPRSensor.plate, "xxxxxx");
+          //  LPR sensors
+        pthread_mutex_init(&shm.data->entrance[i].LPRSensor.LPRmutex, &attr_m);
+        pthread_cond_init(&shm.data->entrance[i].LPRSensor.LPRcond, &attr_c);
+       
 
         
     }
 //Exits
     for (int i = 0;i < EXITS;i++){
-        //  LPR sensors
-        pthread_mutex_init(&shm.data->exit[i].LPRSensor.LPRmutex, &attr_m);
-        pthread_cond_init(&shm.data->exit[i].LPRSensor.LPRcond, &attr_c);
+        
         // Boom Gates
         pthread_mutex_init(&shm.data->exit[i].gate.gatemutex, &attr_m);
         pthread_cond_init(&shm.data->exit[i].gate.gatecond, &attr_c);
+         shm.data->exit[i].gate.status = 'C';
+        strcpy(shm.data->exit[i].LPRSensor.plate, "xxxxxx");
+         //  LPR sensors
+        pthread_mutex_init(&shm.data->exit[i].LPRSensor.LPRmutex, &attr_m);
+        pthread_cond_init(&shm.data->exit[i].LPRSensor.LPRcond, &attr_c);
 
         
     }
