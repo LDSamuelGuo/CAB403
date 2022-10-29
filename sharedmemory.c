@@ -4,14 +4,15 @@
 #define EXITS 5
 #define LEVELS 5
 
+
 /**
- * LPR sensors
+ * Information sign 
  */
-typedef struct LPRSensor_t {
-    pthread_mutex_t LPRmutex;
-    pthread_cond_t LPRcond;
-    char plate[7];
-} LPRSensor_t;
+typedef struct informationSign_t {
+    pthread_mutex_t ISmutex;
+	pthread_cond_t IScond;
+	char display;
+} informationSign_t;
 /*
 boom gate state
 */ 
@@ -22,6 +23,7 @@ typedef enum gate_status_t
     R,
     L
 }gate_status_t;
+
 /**
  * Boom gates 
  */
@@ -32,30 +34,13 @@ typedef struct gate_t {
 } gate_t;
  
 /**
- * Information sign 
+ * LPR sensors
  */
-typedef struct informationSign_t {
-    pthread_mutex_t ISmutex;
-	pthread_cond_t IScond;
-	char display;
-} informationSign_t;
-
-/**
- * The different entrances
- */
-typedef struct entrance_t {
-    LPRSensor_t LPRSensor;
-    gate_t gate;
-    informationSign_t informationSign;
-} entrance_t;
-
-/**
- * The different exits
- */
-typedef struct exit_t {
-    LPRSensor_t LPRSensor;
-    gate_t gate;
-} exit_t;
+typedef struct LPRSensor_t {
+    pthread_mutex_t LPRmutex;
+    pthread_cond_t LPRcond;
+    char plate[7];
+} LPRSensor_t;
 
 /**
  * The different levels
@@ -66,6 +51,22 @@ typedef struct level_t {
     volatile char fireAlarm;
 } level_t;
 
+/**
+ * The different exits
+ */
+typedef struct exit_t {
+    LPRSensor_t LPRSensor;
+    gate_t gate;
+} exit_t;
+
+/**
+ * The different entrances
+ */
+typedef struct entrance_t {
+    LPRSensor_t LPRSensor;
+    gate_t gate;
+    informationSign_t informationSign;
+} entrance_t;
 
 /**
  * Our shared data block.
