@@ -136,7 +136,7 @@ void readFile(char *filename){
 char* randomPlate(){
     int first = generateRandom(0, 9);
     int second = generateRandom(0, 9);
-    char third = generateRandom(0, 9);
+    int third = generateRandom(0, 9);
 
     char randomletter1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[generateRandom(0, 25)];
     char randomletter2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[generateRandom(0, 25)];
